@@ -83,7 +83,7 @@ export class SMatMessageTipDirective implements OnDestroy {
         positionStrategy: strategy,
         scrollStrategy: this.overlay.scrollStrategies.reposition(),
         minWidth: 100,
-        maxWidth: 400
+        maxWidth: 448
       });
       return this.overlayRef;
     };
