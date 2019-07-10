@@ -1,3 +1,4 @@
+import { MatIconModule } from '@angular/material/icon';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -11,7 +12,8 @@ import { SMatMessageTipModule } from '../message-tip/message-tip.module';
   imports: [
     CommonModule,
     MainRoutingModule,
-    SMatMessageTipModule
+    SMatMessageTipModule,
+    MatIconModule
   ]
 })
 export class MainModule { }

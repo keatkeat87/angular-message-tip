@@ -14,14 +14,12 @@ import { SMatMessageTipDirective } from './message-tip.directive';
   animations: [trigger('state', [
     state('initial, void, hidden', style({transform: 'scale(0)'})),
     state('visible', style({transform: 'scale(1)'})),
-    transition('* => visible', animate('500ms cubic-bezier(0, 0, 0.2, 1)', keyframes([
+    transition('* => visible', animate('200ms', keyframes([
       style({transform: 'scale(0)', offset: 0}),
-      style({transform: 'scale(0.99)', offset: 0.5}),
       style({transform: 'scale(1)', offset: 1})
     ]))),
-    transition('* => hidden', animate('500ms cubic-bezier(0, 0, 0.2, 1)', keyframes([
+    transition('* => hidden', animate('150ms', keyframes([
       style({transform: 'scale(1)', offset: 0}),
-      style({transform: 'scale(0.01)', offset: 0.5}),
       style({transform: 'scale(0)', offset: 1})
     ])))
   ])]

@@ -2,9 +2,9 @@
 
 .card {
   box-sizing: border-box;
+  padding: 24px;
   font-size: 13px;
   line-height: 20px;
-  padding: 16px;
   background: white;
   @include mat-elevation(2);
 }

@@ -1,7 +1,11 @@
 .buttonOrigin{
-    width:24px;
-    height:24px;
     margin:100px auto;
     border-radius: 50%;
-    border:1px solid;
+    display: block;
+    cursor: pointer;
+    color:gray;
+    transition: .3s;
+    &:hover{
+        color:inherit;
+    }
 }
