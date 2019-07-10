@@ -65,17 +65,13 @@ export class SMatMessageTipDirective implements OnDestroy {
             originX: 'end',
             originY: 'bottom',
             overlayX: 'start',
-            overlayY: 'top',
-            offsetX: 5,
-            offsetY: 5,
+            overlayY: 'top'
           },
           {
             originX: 'start',
             originY: 'top',
             overlayX: 'end',
-            overlayY: 'bottom',
-            offsetX: -5,
-            offsetY: -5,
+            overlayY: 'bottom'
           }
         ]);
 
