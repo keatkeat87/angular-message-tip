@@ -75,7 +75,7 @@ export class SMatMessageTipDirective implements OnDestroy {
       const scrollableAncestors = this.scrollDispatcher.getAncestorScrollContainers(this.hostElementRef);
       const strategy = this.overlay.position()
         .flexibleConnectedTo(this.hostElementRef)
-        .withTransformOriginOn('.mat-tooltip')
+        .withTransformOriginOn('.transformOrigin')
         .withFlexibleDimensions(false)
         .withViewportMargin(8)
         .withScrollableContainers(scrollableAncestors)
@@ -102,7 +102,9 @@ export class SMatMessageTipDirective implements OnDestroy {
 
       this.overlayRef = this.overlay.create({
         positionStrategy: strategy,
-        scrollStrategy: this.overlay.scrollStrategies.reposition()
+        scrollStrategy: this.overlay.scrollStrategies.reposition(),
+        minWidth: 100,
+        maxWidth: 400
       });
       return this.overlayRef;
     };
