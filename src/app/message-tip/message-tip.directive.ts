@@ -51,10 +51,10 @@ export class SMatMessageTipDirective implements OnDestroy {
 
   private showed = false;
 
-  // @HostListener('mouseenter')
-  // onHostMouseEnter() {
-  //   this.show();
-  // }
+  @HostListener('mouseenter')
+  onHostMouseEnter() {
+    this.show();
+  }
 
   @HostListener('mouseleave')
   onHostMouseLeave() {
