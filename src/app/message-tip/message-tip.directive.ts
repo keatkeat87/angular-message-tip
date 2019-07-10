@@ -6,7 +6,7 @@ import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
 import { Subscription } from 'rxjs';
 import { S_MAT_MESSAGE_TIP_DATA } from './data-token';
 
-const delay = 1000;
+const delay = 400;
 
 @Directive({
   // tslint:disable-next-line: directive-selector
@@ -22,22 +22,8 @@ export class SMatMessageTipDirective implements OnDestroy {
     private overlay: Overlay,
     private scrollDispatcher: ScrollDispatcher,
     private viewContainerRef: ViewContainerRef,
-    private injector: Injector,
-    // platform: Platform,
-  ) {
-    // if (platform.isBrowser) {
-    //   const hostElement = hostElementRef.nativeElement;
-
-    //   if (!platform.IOS && !platform.ANDROID) {
-    //     this.manualListeners
-    //       .set('mouseenter', () => this.show())
-    //       .set('mouseleave', () => this.hide());
-
-    //     this.manualListeners.set('click', () => this.show());
-    //     this.manualListeners.forEach((listener, event) => hostElement.addEventListener(event, listener));
-    //   }
-    // }
-  }
+    private injector: Injector
+  ) {}
 
   @Input('sMatMessageTip')
   template: TemplateRef<any>; // note: 只能 set 一次哦, 不支持换的
@@ -60,12 +46,6 @@ export class SMatMessageTipDirective implements OnDestroy {
   onHostMouseLeave() {
     this.hide();
   }
-
-  @HostListener('click')
-  onHostClick() {
-    this.show();
-  }
-
 
   show() {
     const createOverlayRef = () => {
@@ -111,15 +91,8 @@ export class SMatMessageTipDirective implements OnDestroy {
     this.clearHideTimeout();
     if (!this.showed && this.showTimeoutId === null) {
       this.showTimeoutId = window.setTimeout(() => {
-        console.log('attach');
         this.showTimeoutId = null;
         const overlayRef = createOverlayRef();
-        if (overlayRef.hasAttached()) {
-          console.log('hasAttached');
-        } else {
-          console.log('ok');
-        }
-
         const injectionTokens = new WeakMap();
         injectionTokens.set(S_MAT_MESSAGE_TIP_DATA, this.template);
         injectionTokens.set(SMatMessageTipDirective, this);
@@ -130,7 +103,6 @@ export class SMatMessageTipDirective implements OnDestroy {
           this.messageTipInstance.afterHidden().subscribe(() => {
             overlayRef.detach();
             this.showed = false;
-            console.log('afterHidden detach');
           })
         );
         this.messageTipInstance.show();
@@ -163,11 +135,6 @@ export class SMatMessageTipDirective implements OnDestroy {
     if (this.overlayRef) {
       this.overlayRef.dispose();
       this.messageTipInstance = null;
-    }
-
-    // this.manualListeners.forEach((listener, event) => {
-    //   this.hostElementRef.nativeElement.removeEventListener(event, listener);
-    // });
-    // this.manualListeners.clear();
+    } 
   }
 }
