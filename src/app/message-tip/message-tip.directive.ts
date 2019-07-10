@@ -84,8 +84,10 @@ export class SMatMessageTipDirective implements OnDestroy {
     };
 
     const overlayRef = createOverlayRef();
-    if(overlayRef.hasAttached()) {
+    if (overlayRef.hasAttached()) {
       console.log('hasAttached');
+    } else {
+      console.log('ok');
     }
 
     this.portal = this.portal || new ComponentPortal(SMatMessageTipComponent, this.viewContainerRef);
