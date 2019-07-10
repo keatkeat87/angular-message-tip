@@ -1,0 +1,17 @@
+@import "~@angular/material/theming";
+
+.buttonOrigin{
+    width:24px;
+    height:24px;
+    margin:100px auto;
+    border-radius: 50%;
+    border:1px solid;
+}
+.card {
+  box-sizing: border-box;
+  font-size: 13px;
+  line-height: 20px;
+  padding: 16px;
+  background: white;
+  @include mat-elevation(2);
+}
