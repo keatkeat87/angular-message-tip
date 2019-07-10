@@ -14,7 +14,6 @@ const delay = 400;
 })
 export class SMatMessageTipDirective implements OnDestroy {
 
-  // private manualListeners = new Map<string, EventListenerOrEventListenerObject>();
   private subscription = new Subscription();
 
   constructor(
