@@ -19,12 +19,12 @@ $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include angular-material-theme($candy-app-theme);
-$custom-typography: mat-typography-config(
-  $font-family: "Roboto, Arial, sans-serif",
-  $headline: mat-typography-level(32px, 48px, 700),
-  $body-1: mat-typography-level(16px, 24px, 500)
-);
-@include angular-material-typography($custom-typography);
+// $custom-typography: mat-typography-config(
+//   $font-family: "Roboto, Helvetica Neue, sans-serif",
+//   $headline: mat-typography-level(32px, 48px, 700),
+//   $body-1: mat-typography-level(16px, 24px, 500)
+// );
+// @include angular-material-typography($custom-typography);
 
 // .mat-button-toggle-checked {
 //   background-color: mat-color($candy-app-accent);
@@ -32,7 +32,7 @@ $custom-typography: mat-typography-config(
 // }
 
 body {
-  font-family: Roboto, Arial, sans-serif;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
 * {
