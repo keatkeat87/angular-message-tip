@@ -1,6 +1,8 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, TemplateRef, ChangeDetectionStrategy, Inject } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { AnimationEvent, trigger, state, transition, style, animate, keyframes } from '@angular/animations';
+import { S_MAT_MESSAGE_TIP_DATA } from './data-token';
+
 
 const delay = 1000;
 
@@ -22,7 +24,8 @@ const delay = 1000;
 export class SMatMessageTipComponent implements OnInit, OnDestroy {
 
   constructor(
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    @Inject(S_MAT_MESSAGE_TIP_DATA) public template: TemplateRef<any>
   ) { }
 
   private onHide = new Subject<void>();
@@ -30,8 +33,6 @@ export class SMatMessageTipComponent implements OnInit, OnDestroy {
   private hideTimeoutId: number | null = null;
 
   visibility: 'initial' | 'visible' | 'hidden' = 'initial';
-
-  public template: TemplateRef<any>;
 
   ngOnInit() {
   }

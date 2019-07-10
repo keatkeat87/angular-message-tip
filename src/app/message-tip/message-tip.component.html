@@ -1,6 +1,6 @@
 <div [@state]="visibility" (@state.done)="animationDone($event)">
-    <div class="card">
-    abc hello world hello world hello world hello world hello world hello world hello world hello world hello world hello world hello world hello world hello world hello world 123
+  <div class="card">
+    <ng-container [ngTemplateOutlet]="template"></ng-container>
+    <!-- abc hello world hello world hello world hello world hello world hello world hello world hello world hello world hello world hello world hello world hello world hello world 123 -->
   </div>
-    <!-- <ng-container [ngTemplateOutlet]="template" ></ng-container> -->
 </div>

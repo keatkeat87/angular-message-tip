@@ -1,9 +1,10 @@
-import { Directive, Input, TemplateRef, ElementRef, OnDestroy, ViewContainerRef } from '@angular/core';
+import { Directive, Input, TemplateRef, ElementRef, OnDestroy, ViewContainerRef, Injector } from '@angular/core';
 import { Platform } from '@angular/cdk/platform';
 import { OverlayRef, Overlay, ScrollDispatcher } from '@angular/cdk/overlay';
 import { SMatMessageTipComponent } from './message-tip.component';
-import { ComponentPortal } from '@angular/cdk/portal';
+import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
 import { Subscription } from 'rxjs';
+import { S_MAT_MESSAGE_TIP_DATA } from './data-token';
 
 
 @Directive({
@@ -20,6 +21,7 @@ export class SMatMessageTipDirective implements OnDestroy {
     private overlay: Overlay,
     private scrollDispatcher: ScrollDispatcher,
     private viewContainerRef: ViewContainerRef,
+    private injector: Injector,
     platform: Platform,
   ) {
     if (platform.isBrowser) {
@@ -37,7 +39,7 @@ export class SMatMessageTipDirective implements OnDestroy {
   }
 
   @Input('sMatMessageTip')
-  template: TemplateRef<any>;
+  template: TemplateRef<any>; // note: 只能 set 一次哦, 不支持换的
 
   private overlayRef: OverlayRef;
   private messageTipInstance: SMatMessageTipComponent | null;
@@ -90,7 +92,10 @@ export class SMatMessageTipDirective implements OnDestroy {
       console.log('ok');
     }
 
-    this.portal = this.portal || new ComponentPortal(SMatMessageTipComponent, this.viewContainerRef);
+    const injectionTokens = new WeakMap();
+    injectionTokens.set(S_MAT_MESSAGE_TIP_DATA, this.template);
+    const portalInjector = new PortalInjector(this.injector, injectionTokens);
+    this.portal = this.portal || new ComponentPortal(SMatMessageTipComponent, this.viewContainerRef, portalInjector);
     this.messageTipInstance = overlayRef.attach(this.portal).instance;
     this.subscription.add(
       this.messageTipInstance.afterHidden().subscribe(() => {
