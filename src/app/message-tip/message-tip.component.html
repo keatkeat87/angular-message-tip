@@ -1,1 +1,4 @@
-<p>message-tip works!</p>
+<div [@state]="visibility" (@state.done)="animationDone($event)">
+    test
+    <!-- <ng-container [ngTemplateOutlet]="template" ></ng-container> -->
+</div>

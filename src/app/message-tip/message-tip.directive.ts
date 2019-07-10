@@ -1,29 +1,31 @@
-import { Directive, Input, TemplateRef, ElementRef, OnDestroy } from '@angular/core';
+import { Directive, Input, TemplateRef, ElementRef, OnDestroy, ViewContainerRef } from '@angular/core';
 import { Platform } from '@angular/cdk/platform';
 import { OverlayRef, Overlay, ScrollDispatcher } from '@angular/cdk/overlay';
 import { SMatMessageTipComponent } from './message-tip.component';
+import { ComponentPortal } from '@angular/cdk/portal';
+import { Subscription } from 'rxjs';
 
 
 @Directive({
   // tslint:disable-next-line: directive-selector
-  selector: '[sMatMessageTip]'
+  selector: '[sMatMessageTip]',
 })
 export class SMatMessageTipDirective implements OnDestroy {
 
   private manualListeners = new Map<string, EventListenerOrEventListenerObject>();
+  private subscription = new Subscription();
 
   constructor(
     private hostElementRef: ElementRef<HTMLElement>,
     private overlay: Overlay,
     private scrollDispatcher: ScrollDispatcher,
+    private viewContainerRef: ViewContainerRef,
     platform: Platform,
   ) {
-    console.log('in', platform);
     if (platform.isBrowser) {
       const hostElement = hostElementRef.nativeElement;
 
       if (!platform.IOS && !platform.ANDROID) {
-        console.log('here');
         this.manualListeners
           .set('mouseenter', () => this.show())
           .set('mouseleave', () => this.hide());
@@ -38,10 +40,11 @@ export class SMatMessageTipDirective implements OnDestroy {
   template: TemplateRef<any>;
 
   private overlayRef: OverlayRef;
-  private messagetipInstance: SMatMessageTipComponent | null;
+  private messageTipInstance: SMatMessageTipComponent | null;
+  private portal: ComponentPortal<SMatMessageTipComponent>;
 
   show() {
-    const createOverlay = () => {
+    const createOverlayRef = () => {
       if (this.overlayRef) {
         return this.overlayRef;
       }
@@ -77,24 +80,38 @@ export class SMatMessageTipDirective implements OnDestroy {
         positionStrategy: strategy,
         scrollStrategy: this.overlay.scrollStrategies.reposition()
       });
-
       return this.overlayRef;
     };
+
+    const overlayRef = createOverlayRef();
+    if(overlayRef.hasAttached()) {
+      console.log('hasAttached');
+    }
+
+    this.portal = this.portal || new ComponentPortal(SMatMessageTipComponent, this.viewContainerRef);
+    this.messageTipInstance = overlayRef.attach(this.portal).instance;
+    this.subscription.add(
+      this.messageTipInstance.afterHidden().subscribe(() => {
+        overlayRef.detach();
+        console.log('afterHidden detach');
+      })
+    );
+    this.messageTipInstance.show();
   }
 
-
-
   hide() {
-    console.log('hide');
+    console.log('dir hide');
+    if (this.messageTipInstance) {
+      this.messageTipInstance.hide();
+    }
   }
 
   ngOnDestroy() {
-
+    this.subscription.unsubscribe();
     if (this.overlayRef) {
       this.overlayRef.dispose();
-      this.messagetipInstance = null;
+      this.messageTipInstance = null;
     }
-
 
     this.manualListeners.forEach((listener, event) => {
       this.hostElementRef.nativeElement.removeEventListener(event, listener);
