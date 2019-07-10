@@ -4,23 +4,20 @@ import { AnimationEvent, trigger, state, transition, style, animate, keyframes }
 import { S_MAT_MESSAGE_TIP_DATA } from './data-token';
 import { SMatMessageTipDirective } from './message-tip.directive';
 
-
-// const delay = 1000;
-
 @Component({
   templateUrl: './message-tip.component.html',
   styleUrls: ['./message-tip.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [trigger('state', [
-    state('initial, void, hidden', style({transform: 'scale(0)'})),
-    state('visible', style({transform: 'scale(1)'})),
+    state('initial, void, hidden', style({ transform: 'scale(0)' })),
+    state('visible', style({ transform: 'scale(1)' })),
     transition('* => visible', animate('200ms', keyframes([
-      style({transform: 'scale(0)', offset: 0}),
-      style({transform: 'scale(1)', offset: 1})
+      style({ transform: 'scale(0)', offset: 0 }),
+      style({ transform: 'scale(1)', offset: 1 })
     ]))),
     transition('* => hidden', animate('150ms', keyframes([
-      style({transform: 'scale(1)', offset: 0}),
-      style({transform: 'scale(0)', offset: 1})
+      style({ transform: 'scale(1)', offset: 0 }),
+      style({ transform: 'scale(0)', offset: 1 })
     ])))
   ])]
 })
@@ -33,8 +30,6 @@ export class SMatMessageTipComponent implements OnInit, OnDestroy {
   ) { }
 
   private onHide = new Subject<void>();
-  // private showTimeoutId: number | null = null;
-  // private hideTimeoutId: number | null = null;
 
   visibility: 'initial' | 'visible' | 'hidden' = 'initial';
 
@@ -53,35 +48,19 @@ export class SMatMessageTipComponent implements OnInit, OnDestroy {
   }
 
   public show() {
-    // if (this.hideTimeoutId !== null) {
-    //   clearTimeout(this.hideTimeoutId);
-    //   this.hideTimeoutId = null;
-    // }
-
-    // this.showTimeoutId = window.setTimeout(() => {
-      console.log('show ~~ animation');
-      this.visibility = 'visible';
-      // this.showTimeoutId = null;
-      this.cdr.markForCheck();
-    // }, delay);
+    this.visibility = 'visible';
+    this.cdr.markForCheck();
   }
 
   public hide() {
-    // if (this.showTimeoutId) {
-    //   clearTimeout(this.showTimeoutId);
-    //   this.showTimeoutId = null;
-    // }
-    // this.hideTimeoutId = window.setTimeout(() => {
-      console.log('hidden animation');
-      this.visibility = 'hidden';
-      // this.hideTimeoutId = null;
-      this.cdr.markForCheck();
-    // }, delay);
+    this.visibility = 'hidden';
+    this.cdr.markForCheck();
   }
 
   animationDone(event: AnimationEvent): void {
     const toState = event.toState as SMatMessageTipComponent['visibility'];
-    if (toState === 'hidden' && this.visibility !== 'visible' ) {
+    // if (toState === 'hidden' && this.visibility !== 'visible') {
+    if (toState === 'hidden') {
       this.onHide.next();
     }
   }
