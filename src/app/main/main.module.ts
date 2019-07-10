@@ -1,3 +1,4 @@
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatIconModule } from '@angular/material/icon';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -13,7 +14,8 @@ import { SMatMessageTipModule } from '../message-tip/message-tip.module';
     CommonModule,
     MainRoutingModule,
     SMatMessageTipModule,
-    MatIconModule
+    MatIconModule,
+    ScrollingModule
   ]
 })
 export class MainModule { }

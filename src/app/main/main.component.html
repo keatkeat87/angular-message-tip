@@ -1,9 +1,11 @@
-<div style="height:50vh"></div>
-<mat-icon [sMatMessageTip]="messageTipTemplate" class="buttonOrigin">error</mat-icon>
-<div style="height:50vh"></div>
+<div cdk-scrollable style="position:fixed; top:0; left:0; width:100%; height:100%; overflow: auto;">
+        <div style="height:50vh"></div>
+        <mat-icon [sMatMessageTip]="messageTipTemplate" class="buttonOrigin">error</mat-icon>
+        <div style="height:50vh"></div>
+</div>
 
 
 
-<ng-template #messageTipTemplate >
+<ng-template #messageTipTemplate>
         The final URL is the URL that people reach after clicking your ad. It should match what your ad promotes. If you use a cross-domain redirect, enter it in a tracking template.
 </ng-template>
